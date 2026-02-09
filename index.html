@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harry Kaonis — Software Engineer</title>
-  <meta name="description" content="Harry Kaonis — Software engineer who turns caffeine into code and bugs into features.">
-  <meta name="theme-color" content="#0d0d0d">
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <title>Harry Kaonis — Software Engineer</title>
+    <meta name="description"
+      content="Harry Kaonis — Software engineer building for web + mobile. Turns caffeine into code and bugs into features.">
+	  <meta name="theme-color" content="#0d0d0d">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -28,16 +29,21 @@
     }
 
     html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--sans);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
+	    body {
+	      font-family: var(--sans);
+	      background: var(--bg);
+	      color: var(--text);
+	      line-height: 1.7;
+	      overflow-x: hidden;
+	    }
 
-    a { color: var(--accent); text-decoration: none; transition: color .2s; }
-    a:hover { color: #a7f3d0; }
+	    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+	    a:hover { color: #a7f3d0; }
+	    a:focus-visible {
+	      outline: 2px solid rgba(110, 231, 183, .45);
+	      outline-offset: 3px;
+	      border-radius: 8px;
+	    }
 
     /* ── Animated gradient bg ──────────────────────────── */
     .bg-glow {
@@ -287,29 +293,41 @@
     footer p {
       font-size: .8rem; color: var(--text-dim);
     }
-    footer .easter-egg {
-      font-family: var(--mono); font-size: .75rem;
-      color: #333; margin-top: .5rem;
-      transition: color .3s;
-    }
-    footer .easter-egg:hover { color: var(--accent); }
+	    footer .easter-egg {
+	      font-family: var(--mono); font-size: .75rem;
+	      color: #333; margin-top: .5rem;
+	      cursor: help;
+	      transition: color .3s;
+	    }
+	    footer .easter-egg:hover { color: var(--accent); }
+	    footer .easter-egg:focus-visible {
+	      color: var(--accent);
+	      outline: 2px dashed rgba(110, 231, 183, .35);
+	      outline-offset: 4px;
+	      border-radius: 8px;
+	    }
 
-    /* ── Scroll reveal ─────────────────────────────────── */
-    .reveal {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity .6s, transform .6s;
-    }
-    .reveal.visible {
-      opacity: 1; transform: translateY(0);
-    }
+	    /* ── Scroll reveal ─────────────────────────────────── */
+	    .reveal {
+	      opacity: 0; transform: translateY(20px);
+	      transition: opacity .6s, transform .6s;
+	    }
+	    .reveal.visible {
+	      opacity: 1; transform: translateY(0);
+	    }
 
-    /* ── Responsive ────────────────────────────────────── */
-    @media (max-width: 600px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .hero { padding: 5rem 0 3rem; }
-      .nav-links { gap: 1rem; }
-      .contact-links { flex-direction: column; }
-    }
+	    @media (prefers-reduced-motion: reduce) {
+	      html { scroll-behavior: auto; }
+	      *, *::before, *::after { animation: none !important; transition: none !important; }
+	    }
+
+	    /* ── Responsive ────────────────────────────────────── */
+	    @media (max-width: 600px) {
+	      .about-grid { grid-template-columns: 1fr; }
+	      .hero { padding: 5rem 0 3rem; }
+	      .nav-links { gap: 1rem; }
+	      .contact-links { flex-direction: column; }
+	    }
   </style>
 </head>
 <body>
@@ -328,37 +346,39 @@
   </nav>
 
   <!-- ─── Hero ──────────────────────────────────────── -->
-  <section class="hero">
-    <div class="container">
-      <p class="hero-greeting">// hello, world</p>
-      <h1>I'm <span class="highlight">Harry Kaonis</span>.<br>I build things for the&nbsp;web.</h1>
-      <p class="hero-tagline">Software engineer who turns caffeine into clean code — and occasionally into bugs that take three hours to find in a missing semicolon.</p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">
-          <span>View Projects</span>
-          <span>↓</span>
-        </a>
-        <a href="https://github.com/kaonis" class="btn btn-ghost" target="_blank" rel="noopener">
-          <span>GitHub</span>
-          <span>→</span>
-        </a>
-      </div>
-    </div>
-  </section>
+	  <section class="hero">
+	    <div class="container">
+	      <p class="hero-greeting">// hello, world</p>
+	      <h1>I'm <span class="highlight">Harry Kaonis</span>.<br>I build things for the&nbsp;web &amp; mobile.</h1>
+	      <p class="hero-tagline">Software engineer who turns caffeine into clean code — and occasionally into bugs that take three hours to find in a missing semicolon.</p>
+	      <div class="hero-cta">
+	        <a href="#projects" class="btn btn-primary">
+	          <span>View Projects</span>
+	          <span>↓</span>
+	        </a>
+	        <a href="https://github.com/kaonis" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">
+	          <span>GitHub</span>
+	          <span>→</span>
+	        </a>
+	      </div>
+	    </div>
+	  </section>
 
   <!-- ─── About ─────────────────────────────────────── -->
-  <section id="about">
-    <div class="container reveal">
-      <p class="section-label">// about</p>
-      <h2 class="section-title">Who's behind the keyboard?</h2>
-      <p class="section-desc">A software engineer who writes code by day, refactors it by night, and dreams in <code style="font-family:var(--mono);color:var(--accent);font-size:.9em">async/await</code>. I love building tools that make developers' lives easier — or at least more entertaining.</p>
+	  <section id="about">
+	    <div class="container reveal">
+	      <p class="section-label">// about</p>
+	      <h2 class="section-title">Who's behind the keyboard?</h2>
+        <p class="section-desc">A software engineer who writes code by day, refactors it by night, and dreams in <code
+            style="font-family:var(--mono);color:var(--accent);font-size:.9em">async/await</code>. I build for web and mobile, and I love shipping tools that make developers' lives easier — or at least more
+          entertaining.</p>
 
       <div class="about-grid">
-        <div class="stat-card">
-          <div class="icon">⚡</div>
-          <h3>Full-Stack Dev</h3>
-          <p>TypeScript, Node.js, React, and whatever the framework-of-the-week is.</p>
-        </div>
+	        <div class="stat-card">
+	          <div class="icon">⚡</div>
+	          <h3>Full-Stack Dev</h3>
+            <p>TypeScript, Node.js, React, React Native, Android, iOS, and whatever the framework-of-the-week is.</p>
+	        </div>
         <div class="stat-card">
           <div class="icon">🧠</div>
           <h3>Problem Solver</h3>
@@ -392,7 +412,7 @@
       <p class="section-desc">A curated selection of my work. Some useful, some educational, all lovingly over-engineered.</p>
 
       <!-- woly-server -->
-      <a href="https://github.com/kaonis/woly-server" class="project-card" target="_blank" rel="noopener">
+	      <a href="https://github.com/kaonis/woly-server" class="project-card" target="_blank" rel="noopener noreferrer">
         <div class="project-header">
           <span class="project-name">
             📡 woly-server
@@ -410,7 +430,7 @@
       </a>
 
       <!-- CryptoCross -->
-      <a href="https://github.com/kaonis/CryptoCross" class="project-card" target="_blank" rel="noopener">
+	      <a href="https://github.com/kaonis/CryptoCross" class="project-card" target="_blank" rel="noopener noreferrer">
         <div class="project-header">
           <span class="project-name">
             🧩 CryptoCross
@@ -427,7 +447,7 @@
       </a>
 
       <!-- harry.kaonis.com -->
-      <a href="https://github.com/kaonis/kaonis.github.io" class="project-card" target="_blank" rel="noopener">
+	      <a href="https://github.com/kaonis/kaonis.github.io" class="project-card" target="_blank" rel="noopener noreferrer">
         <div class="project-header">
           <span class="project-name">
             🌐 harry.kaonis.com
@@ -470,40 +490,50 @@
       <h2 class="section-title">Let's connect</h2>
       <p class="section-desc">Whether you want to collaborate, chat about tech, or debate the merits of dark mode — I'm always up for a conversation.</p>
 
-      <div class="contact-links">
-        <a href="https://github.com/kaonis" class="contact-link" target="_blank" rel="noopener">
-          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          GitHub
-        </a>
-        <a href="mailto:ch.kaonis@proton.me" class="contact-link">
-          <svg viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
-          Email
-        </a>
-      </div>
+	      <div class="contact-links">
+	        <a href="https://www.linkedin.com/in/charis-ioannikios-kaonis-47368130" class="contact-link" target="_blank" rel="noopener noreferrer">
+	          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0.5 23.5h4V7.98h-4V23.5zM8.5 7.98h3.83v2.12h.05c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.14v9.32h-4v-8.26c0-1.97-.04-4.5-2.74-4.5-2.74 0-3.16 2.14-3.16 4.36v8.4h-4V7.98z"/></svg>
+	          LinkedIn
+	        </a>
+	        <a href="https://github.com/kaonis" class="contact-link" target="_blank" rel="noopener noreferrer">
+	          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+	          GitHub
+	        </a>
+	        <a href="mailto:ch.kaonis@proton.me" class="contact-link">
+	          <svg viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+	          Email
+	        </a>
+	      </div>
     </div>
   </section>
 
   <!-- ─── Footer ────────────────────────────────────── -->
-  <footer>
-    <div class="container">
-      <p>Built with ☕ &amp; stubbornness by Harry Kaonis</p>
-      <p class="easter-egg" title="You found it!">// TODO: add more easter eggs</p>
-    </div>
-  </footer>
+	  <footer>
+	    <div class="container">
+	      <p>Built with ☕ &amp; stubbornness by Harry Kaonis</p>
+	      <p class="easter-egg" title="You found it!" tabindex="0">// TODO: add more easter eggs</p>
+	    </div>
+	  </footer>
 
-  <!-- ─── Scroll Reveal ─────────────────────────────── -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var reveals = document.querySelectorAll('.reveal');
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.15 });
-      reveals.forEach(function (el) { observer.observe(el); });
-    });
-  </script>
+	  <!-- ─── Scroll Reveal ─────────────────────────────── -->
+	  <script>
+	    document.addEventListener('DOMContentLoaded', function () {
+	      var reveals = document.querySelectorAll('.reveal');
+	      var remaining = reveals.length;
+	      var observer = new IntersectionObserver(function (entries) {
+	        entries.forEach(function (entry) {
+	          if (entry.isIntersecting) {
+	            if (!entry.target.classList.contains('visible')) {
+	              entry.target.classList.add('visible');
+	              observer.unobserve(entry.target);
+	              remaining -= 1;
+	              if (remaining <= 0) observer.disconnect();
+	            }
+	          }
+	        });
+	      }, { threshold: 0.15 });
+	      reveals.forEach(function (el) { observer.observe(el); });
+	    });
+	  </script>
 </body>
 </html>
