@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harry Kaonis — Software Engineer</title>
+  <meta name="description" content="Harry Kaonis — Software engineer who turns caffeine into code and bugs into features.">
+  <meta name="theme-color" content="#0d0d0d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ───────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #0a0a0a;
+      --bg-card:   #111111;
+      --bg-hover:  #1a1a1a;
+      --border:    #222222;
+      --text:      #e0e0e0;
+      --text-dim:  #777777;
+      --accent:    #6ee7b7;
+      --accent2:   #818cf8;
+      --accent3:   #f472b6;
+      --mono:      'JetBrains Mono', monospace;
+      --sans:      'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+    a:hover { color: #a7f3d0; }
+
+    /* ── Animated gradient bg ──────────────────────────── */
+    .bg-glow {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 600px 400px at 20% 20%, rgba(110, 231, 183, .06), transparent),
+        radial-gradient(ellipse 500px 500px at 80% 60%, rgba(129, 140, 248, .05), transparent),
+        radial-gradient(ellipse 400px 300px at 50% 90%, rgba(244, 114, 182, .04), transparent);
+    }
+
+    /* ── Layout ────────────────────────────────────────── */
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 5rem 0 2rem;
+    }
+
+    /* ── Nav ───────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(10, 10, 10, .75);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-family: var(--mono); font-weight: 600; font-size: .95rem;
+      color: var(--accent);
+    }
+    .nav-logo .cursor {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a {
+      font-size: .85rem; font-weight: 500; color: var(--text-dim);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ──────────────────────────────────────────── */
+    .hero {
+      padding: 8rem 0 4rem;
+      text-align: left;
+    }
+    .hero-greeting {
+      font-family: var(--mono); font-size: .9rem;
+      color: var(--accent); margin-bottom: .75rem;
+      opacity: 0; animation: fadeUp .6s .2s forwards;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      opacity: 0; animation: fadeUp .6s .4s forwards;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      margin-top: 1.25rem;
+      max-width: 520px;
+      opacity: 0; animation: fadeUp .6s .6s forwards;
+    }
+    .hero-cta {
+      margin-top: 2rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .6s .8s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .65rem 1.4rem;
+      border-radius: 8px;
+      font-size: .9rem; font-weight: 500;
+      transition: all .25s;
+    }
+    .btn-primary {
+      background: var(--accent); color: #0a0a0a;
+    }
+    .btn-primary:hover {
+      background: #a7f3d0; color: #0a0a0a;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(110, 231, 183, .25);
+    }
+    .btn-ghost {
+      border: 1px solid var(--border); color: var(--text-dim);
+    }
+    .btn-ghost:hover {
+      border-color: var(--text-dim); color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Section headings ─────────────────────────────── */
+    .section-label {
+      font-family: var(--mono); font-size: .8rem; font-weight: 500;
+      color: var(--accent); text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: .5rem;
+    }
+    .section-title {
+      font-size: 1.75rem; font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--text-dim); max-width: 540px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── About ─────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color .25s, transform .25s;
+    }
+    .stat-card:hover {
+      border-color: #333; transform: translateY(-2px);
+    }
+    .stat-card .icon { font-size: 1.5rem; margin-bottom: .5rem; }
+    .stat-card h3 {
+      font-size: .95rem; font-weight: 600; margin-bottom: .25rem;
+    }
+    .stat-card p {
+      font-size: .85rem; color: var(--text-dim); line-height: 1.5;
+    }
+
+    /* ── Projects ──────────────────────────────────────── */
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+      transition: border-color .25s, transform .25s;
+      display: block;
+    }
+    .project-card:hover {
+      border-color: #333; transform: translateY(-2px);
+      color: var(--text);
+    }
+    .project-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: .75rem;
+    }
+    .project-name {
+      font-family: var(--mono); font-size: 1rem; font-weight: 600;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .project-tag {
+      font-size: .7rem; font-weight: 500;
+      padding: .2rem .55rem;
+      border-radius: 99px;
+      background: rgba(110, 231, 183, .1);
+      color: var(--accent);
+    }
+    .project-tag.purple { background: rgba(129, 140, 248, .1); color: var(--accent2); }
+    .project-tag.pink   { background: rgba(244, 114, 182, .1); color: var(--accent3); }
+    .project-desc {
+      font-size: .9rem; color: var(--text-dim); margin-bottom: 1rem;
+    }
+    .project-tech {
+      display: flex; gap: .5rem; flex-wrap: wrap;
+    }
+    .tech {
+      font-family: var(--mono); font-size: .75rem;
+      padding: .2rem .6rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-dim);
+    }
+    .project-arrow {
+      color: var(--text-dim); font-size: 1.1rem;
+      transition: transform .25s;
+    }
+    .project-card:hover .project-arrow {
+      transform: translateX(4px);
+      color: var(--accent);
+    }
+
+    /* ── Fun / Extras ─────────────────────────────────── */
+    .fun-strip {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .fun-item {
+      font-family: var(--mono); font-size: .8rem;
+      color: var(--text-dim);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .5rem 1rem;
+    }
+
+    /* ── Contact ───────────────────────────────────────── */
+    .contact-links {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .75rem 1.25rem;
+      font-size: .9rem;
+      color: var(--text-dim);
+      transition: all .25s;
+    }
+    .contact-link:hover {
+      border-color: var(--accent); color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .contact-link svg {
+      width: 18px; height: 18px; fill: currentColor;
+    }
+
+    /* ── Footer ────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    footer p {
+      font-size: .8rem; color: var(--text-dim);
+    }
+    footer .easter-egg {
+      font-family: var(--mono); font-size: .75rem;
+      color: #333; margin-top: .5rem;
+      transition: color .3s;
+    }
+    footer .easter-egg:hover { color: var(--accent); }
+
+    /* ── Scroll reveal ─────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .6s, transform .6s;
+    }
+    .reveal.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* ── Responsive ────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .hero { padding: 5rem 0 3rem; }
+      .nav-links { gap: 1rem; }
+      .contact-links { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- ─── Nav ───────────────────────────────────────── -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo">hk<span class="cursor">_</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ─── Hero ──────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero-greeting">// hello, world</p>
+      <h1>I'm <span class="highlight">Harry Kaonis</span>.<br>I build things for the&nbsp;web.</h1>
+      <p class="hero-tagline">Software engineer who turns caffeine into clean code — and occasionally into bugs that take three hours to find in a missing semicolon.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">
+          <span>View Projects</span>
+          <span>↓</span>
+        </a>
+        <a href="https://github.com/kaonis" class="btn btn-ghost" target="_blank" rel="noopener">
+          <span>GitHub</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── About ─────────────────────────────────────── -->
+  <section id="about">
+    <div class="container reveal">
+      <p class="section-label">// about</p>
+      <h2 class="section-title">Who's behind the keyboard?</h2>
+      <p class="section-desc">A software engineer who writes code by day, refactors it by night, and dreams in <code style="font-family:var(--mono);color:var(--accent);font-size:.9em">async/await</code>. I love building tools that make developers' lives easier — or at least more entertaining.</p>
+
+      <div class="about-grid">
+        <div class="stat-card">
+          <div class="icon">⚡</div>
+          <h3>Full-Stack Dev</h3>
+          <p>TypeScript, Node.js, React, and whatever the framework-of-the-week is.</p>
+        </div>
+        <div class="stat-card">
+          <div class="icon">🧠</div>
+          <h3>Problem Solver</h3>
+          <p>I don't always fix the bug on the first try, but when I do, it was a <code style="font-family:var(--mono);font-size:.85em">console.log</code>.</p>
+        </div>
+        <div class="stat-card">
+          <div class="icon">🛠️</div>
+          <h3>Tool Builder</h3>
+          <p>If I have to do something more than twice, I automate it. Third time's the script.</p>
+        </div>
+        <div class="stat-card">
+          <div class="icon">☕</div>
+          <h3>Caffeine Powered</h3>
+          <p>Fueled by espresso and the irrational belief that "it should work this time."</p>
+        </div>
+      </div>
+
+      <div class="fun-strip" style="margin-top:2rem">
+        <span class="fun-item">🎯 git commit -m "fixed it for real this time"</span>
+        <span class="fun-item">📍 Compiling somewhere on Earth</span>
+        <span class="fun-item">🧩 Tabs &gt; Spaces (fight me)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Projects ──────────────────────────────────── -->
+  <section id="projects">
+    <div class="container reveal">
+      <p class="section-label">// projects</p>
+      <h2 class="section-title">Things I've shipped <span style="color:var(--text-dim);font-weight:400;font-size:.6em">(that didn't crash… much)</span></h2>
+      <p class="section-desc">A curated selection of my work. Some useful, some educational, all lovingly over-engineered.</p>
+
+      <!-- woly-server -->
+      <a href="https://github.com/kaonis/woly-server" class="project-card" target="_blank" rel="noopener">
+        <div class="project-header">
+          <span class="project-name">
+            📡 woly-server
+            <span class="project-tag">Featured</span>
+          </span>
+          <span class="project-arrow">→</span>
+        </div>
+        <p class="project-desc">Wake-on-LAN server monorepo — a node agent + command & control backend + shared protocol. Because why walk to your PC when you can wake it up from the couch?</p>
+        <div class="project-tech">
+          <span class="tech">TypeScript</span>
+          <span class="tech">Node.js</span>
+          <span class="tech">Monorepo</span>
+          <span class="tech">Wake-on-LAN</span>
+        </div>
+      </a>
+
+      <!-- CryptoCross -->
+      <a href="https://github.com/kaonis/CryptoCross" class="project-card" target="_blank" rel="noopener">
+        <div class="project-header">
+          <span class="project-name">
+            🧩 CryptoCross
+            <span class="project-tag purple">Game</span>
+          </span>
+          <span class="project-arrow">→</span>
+        </div>
+        <p class="project-desc">A cryptic crosswords game with a full GUI. For those who think regular crosswords are too mainstream and need an extra layer of mystery.</p>
+        <div class="project-tech">
+          <span class="tech">Java</span>
+          <span class="tech">Swing GUI</span>
+          <span class="tech">Puzzles</span>
+        </div>
+      </a>
+
+      <!-- harrykaonis.me -->
+      <a href="https://github.com/kaonis/kaonis.github.io" class="project-card" target="_blank" rel="noopener">
+        <div class="project-header">
+          <span class="project-name">
+            🌐 harrykaonis.me
+            <span class="project-tag pink">Meta</span>
+          </span>
+          <span class="project-arrow">→</span>
+        </div>
+        <p class="project-desc">This very website. Yes, I'm listing the site you're looking at as a project. It's called recursion — look it up. 😎</p>
+        <div class="project-tech">
+          <span class="tech">HTML</span>
+          <span class="tech">CSS</span>
+          <span class="tech">JavaScript</span>
+          <span class="tech">Irony</span>
+        </div>
+      </a>
+
+      <!-- dotfiles -->
+      <div class="project-card" style="cursor:default;opacity:.7">
+        <div class="project-header">
+          <span class="project-name">
+            ⚙️ dotfiles
+            <span class="project-tag" style="background:rgba(255,255,255,.06);color:var(--text-dim)">Coming Soon</span>
+          </span>
+        </div>
+        <p class="project-desc">My meticulously curated dev environment configs. Because a developer's dotfiles are basically their personality traits in YAML form.</p>
+        <div class="project-tech">
+          <span class="tech">Neovim</span>
+          <span class="tech">Zsh</span>
+          <span class="tech">Tmux</span>
+          <span class="tech">Shell</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Contact ───────────────────────────────────── -->
+  <section id="contact">
+    <div class="container reveal">
+      <p class="section-label">// contact</p>
+      <h2 class="section-title">Let's connect</h2>
+      <p class="section-desc">Whether you want to collaborate, chat about tech, or debate the merits of dark mode — I'm always up for a conversation.</p>
+
+      <div class="contact-links">
+        <a href="https://github.com/kaonis" class="contact-link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+        </a>
+        <a href="mailto:harry@harrykaonis.me" class="contact-link">
+          <svg viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <p>Built with ☕ &amp; stubbornness by Harry Kaonis</p>
+      <p class="easter-egg" title="You found it!">// TODO: add more easter eggs</p>
+    </div>
+  </footer>
+
+  <!-- ─── Scroll Reveal ─────────────────────────────── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var reveals = document.querySelectorAll('.reveal');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15 });
+      reveals.forEach(function (el) { observer.observe(el); });
+    });
+  </script>
+</body>
+</html>
