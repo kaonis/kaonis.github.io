@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agent Sprint — Harry Kaonis</title>
+  <meta name="description" content="One business workflow automated with a Claude-based agent, deployed and evaluated, in two to three weeks. Fixed scope, fixed price, built by a senior engineer.">
+  <meta property="og:title" content="AI Agent Sprint — one workflow, running in production in three weeks">
+  <meta property="og:description" content="Fixed scope, fixed price. Support triage, document intake, internal Q&A or CRM enrichment, built with evals and handed over with docs.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://harry.kaonis.com/ai-agent-sprint/">
+  <meta name="theme-color" content="#f3f5f7">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230f5c6e'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='monospace'>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --paper:   #f3f5f7;
+      --sheet:   #ffffff;
+      --ink:     #141a22;
+      --ink-2:   #4a5563;
+      --rule:    #d6dce3;
+      --teal:    #0f5c6e;
+      --teal-bg: #e3eff2;
+      --amber:   #e07a2f;
+      --display: 'Bricolage Grotesque', 'IBM Plex Sans', system-ui, sans-serif;
+      --sans:    'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+      --mono:    'IBM Plex Mono', ui-monospace, Menlo, monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 0 1.25rem; }
+
+    /* ── Top bar ── */
+    header.top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 0;
+      font-family: var(--mono); font-size: .8rem;
+    }
+    header.top a { text-decoration: none; color: var(--ink-2); }
+    header.top a:hover { color: var(--ink); }
+    header.top .doc-id { color: var(--ink-2); }
+
+    /* ── Spec rows: label rail + content ── */
+    .spec {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 0 2.5rem;
+      padding: 3rem 0;
+      border-top: 1px solid var(--rule);
+    }
+    .spec > .label {
+      font-family: var(--mono); font-size: .75rem; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink-2);
+      padding-top: .45rem;
+    }
+    .spec > .label span { display: block; color: var(--teal); margin-top: .25rem; }
+    h2 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(1.5rem, 3vw, 1.9rem); line-height: 1.2; letter-spacing: -.01em;
+      margin-bottom: 1rem;
+    }
+    p + p { margin-top: .9rem; }
+    .lede { font-size: 1.1rem; color: var(--ink-2); max-width: 60ch; }
+
+    /* ── Hero ── */
+    .hero { padding: 3.5rem 0 3rem; }
+    .eyebrow {
+      font-family: var(--mono); font-size: .8rem; color: var(--teal);
+      display: inline-flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.25rem;
+    }
+    .eyebrow span + span::before { content: "·"; margin-right: .75rem; color: var(--rule); }
+    h1 {
+      font-family: var(--display); font-weight: 800;
+      font-size: clamp(2.3rem, 6.5vw, 4.4rem);
+      line-height: 1.02; letter-spacing: -.025em;
+      max-width: 14ch;
+    }
+    h1 em { font-style: normal; color: var(--teal); }
+    .hero .lede { margin-top: 1.5rem; }
+    .cta-row { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 2rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .8rem 1.3rem; border-radius: 6px;
+      font-family: var(--sans); font-weight: 600; font-size: .95rem;
+      text-decoration: none; border: 1px solid transparent;
+      transition: transform .15s, background .15s, border-color .15s;
+    }
+    .btn-primary { background: var(--teal); color: #fff; }
+    .btn-primary:hover { background: #0b4a59; transform: translateY(-1px); }
+    .btn-ghost { border-color: var(--rule); color: var(--ink); background: var(--sheet); }
+    .btn-ghost:hover { border-color: var(--ink-2); transform: translateY(-1px); }
+
+    /* ── Scope builder (signature) ── */
+    .builder { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    .choices { display: grid; gap: .6rem; }
+    .choice {
+      display: block; width: 100%; text-align: left;
+      background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px;
+      padding: .9rem 1rem; cursor: pointer; font: inherit; color: var(--ink);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .choice:hover { border-color: var(--ink-2); }
+    .choice[aria-pressed="true"] {
+      border-color: var(--teal); box-shadow: inset 3px 0 0 var(--teal); background: var(--teal-bg);
+    }
+    .choice strong { display: block; font-weight: 600; font-size: .95rem; }
+    .choice small { display: block; color: var(--ink-2); font-size: .82rem; margin-top: .15rem; }
+
+    .sheet {
+      background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px;
+      padding: 1.25rem 1.25rem 1.1rem; position: sticky; top: 1rem;
+      font-size: .92rem;
+    }
+    .sheet .sheet-head {
+      font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--ink-2); display: flex; justify-content: space-between; margin-bottom: .75rem;
+    }
+    .sheet h3 { font-family: var(--display); font-weight: 700; font-size: 1.25rem; line-height: 1.2; margin-bottom: .85rem; }
+    .sheet dl { display: grid; grid-template-columns: 7.5rem 1fr; gap: .45rem 1rem; }
+    .sheet dt { font-family: var(--mono); font-size: .74rem; color: var(--ink-2); padding-top: .15rem; }
+    .sheet dd { color: var(--ink); }
+    .sheet dd ul { padding-left: 1.1rem; }
+    .sheet dd li + li { margin-top: .2rem; }
+    .sheet .price { font-family: var(--display); font-weight: 700; font-size: 1.15rem; }
+    .sheet .btn { margin-top: 1.1rem; width: 100%; justify-content: center; }
+    .sheet .fine { font-size: .78rem; color: var(--ink-2); margin-top: .6rem; }
+    .fade { transition: opacity .18s; }
+    .fade.out { opacity: 0; }
+
+    /* ── Lists ── */
+    .deliverables { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; }
+    .deliverables div { border-top: 2px solid var(--ink); padding-top: .6rem; }
+    .deliverables strong { display: block; font-weight: 600; }
+    .deliverables p { color: var(--ink-2); font-size: .92rem; margin-top: .2rem; }
+
+    /* ── Timeline ── */
+    .weeks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .week { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 1.1rem; }
+    .week .w { font-family: var(--mono); font-size: .72rem; color: var(--teal); letter-spacing: .06em; text-transform: uppercase; }
+    .week strong { display: block; font-family: var(--display); font-weight: 700; font-size: 1.05rem; margin: .3rem 0 .5rem; }
+    .week ul { padding-left: 1.1rem; color: var(--ink-2); font-size: .9rem; }
+    .week li + li { margin-top: .25rem; }
+    .exit {
+      margin-top: 1.25rem; padding: 1rem 1.1rem;
+      border-left: 3px solid var(--amber); background: #fbf1e8; border-radius: 0 8px 8px 0;
+      font-size: .95rem;
+    }
+
+    /* ── Price ── */
+    .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .big { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 5vw, 3rem); line-height: 1; letter-spacing: -.02em; }
+    .big small { font-family: var(--mono); font-weight: 400; font-size: .8rem; letter-spacing: 0; color: var(--ink-2); display: block; margin-top: .5rem; }
+    .terms { font-size: .95rem; }
+    .terms li { margin-bottom: .4rem; }
+    .terms ul { padding-left: 1.1rem; }
+
+    /* ── Fit ── */
+    .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; font-size: .95rem; }
+    .fit h3 { font-family: var(--mono); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: .6rem; }
+    .fit ul { padding-left: 1.1rem; }
+    .fit li { margin-bottom: .35rem; }
+    .fit .no h3 { color: var(--amber); }
+    .fit .yes h3 { color: var(--teal); }
+
+    /* ── About ── */
+    .proof { display: grid; gap: .6rem; margin-top: 1rem; font-size: .95rem; }
+    .proof li { list-style: none; padding-left: 1.3rem; position: relative; }
+    .proof li::before { content: ""; position: absolute; left: 0; top: .6rem; width: .6rem; height: 2px; background: var(--teal); }
+
+    /* ── FAQ ── */
+    details { border-top: 1px solid var(--rule); padding: .9rem 0; }
+    details:last-of-type { border-bottom: 1px solid var(--rule); }
+    summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-family: var(--mono); color: var(--ink-2); }
+    details[open] summary::after { content: "–"; }
+    details p { margin-top: .6rem; color: var(--ink-2); font-size: .95rem; max-width: 62ch; }
+
+    /* ── Footer ── */
+    footer { border-top: 1px solid var(--rule); padding: 2rem 0 3rem; font-family: var(--mono); font-size: .78rem; color: var(--ink-2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+
+    @media (max-width: 760px) {
+      .spec { grid-template-columns: 1fr; gap: .75rem; padding: 2.25rem 0; }
+      .spec > .label span { display: inline; margin-left: .5rem; }
+      .builder, .deliverables, .price-grid, .fit { grid-template-columns: 1fr; }
+      .weeks { grid-template-columns: 1fr; }
+      .sheet { position: static; }
+      h1 { max-width: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a href="https://harry.kaonis.com/">← harry.kaonis.com</a>
+      <span class="doc-id">SOW · AI Agent Sprint · v1</span>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow"><span>Fixed scope</span><span>Fixed price</span><span>2 to 3 weeks</span><span>Remote, EU hours</span></p>
+      <h1>One workflow. One agent. <em>Running</em> in three weeks.</h1>
+      <p class="lede">You pick the repetitive job that eats your team's time. I build a Claude-based agent that does it, prove it works with evaluations, deploy it where you want it, and hand it over with documentation. No retainer, no discovery phase that never ends.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#scope">Scope your sprint ↓</a>
+        <a class="btn btn-ghost" href="mailto:ch.kaonis@proton.me?subject=AI%20Agent%20Sprint">Email me directly</a>
+      </div>
+    </section>
+
+    <!-- ── Scope builder ── -->
+    <section class="spec" id="scope">
+      <div class="label">Scope <span>§1</span></div>
+      <div>
+        <h2>What should the agent take off your team's plate?</h2>
+        <p class="lede">Pick the closest match. The statement of work fills in with your choice, and the button sends it to me as an email you can edit before it goes.</p>
+        <div class="builder">
+          <div class="choices" role="group" aria-label="Workflow options">
+            <button class="choice" type="button" data-key="support" aria-pressed="true">
+              <strong>Support triage</strong>
+              <small>Reads incoming tickets or emails, classifies, drafts replies, escalates the rest.</small>
+            </button>
+            <button class="choice" type="button" data-key="documents" aria-pressed="false">
+              <strong>Document intake</strong>
+              <small>Invoices, contracts, applications, forms: extract, validate, push to your system.</small>
+            </button>
+            <button class="choice" type="button" data-key="knowledge" aria-pressed="false">
+              <strong>Internal Q&amp;A</strong>
+              <small>Answers staff questions from your docs, wiki, policies and tickets, with sources.</small>
+            </button>
+            <button class="choice" type="button" data-key="crm" aria-pressed="false">
+              <strong>CRM and lead enrichment</strong>
+              <small>Researches, scores and updates leads or accounts, and drafts first outreach.</small>
+            </button>
+            <button class="choice" type="button" data-key="custom" aria-pressed="false">
+              <strong>Something else</strong>
+              <small>A repetitive, text-heavy job with clear inputs and a clear definition of done.</small>
+            </button>
+          </div>
+
+          <aside class="sheet" aria-live="polite">
+            <div class="sheet-head"><span>Statement of work</span><span>draft</span></div>
+            <div class="fade" id="sheet-body">
+              <h3 id="s-title">Support triage agent</h3>
+              <dl>
+                <dt>Input</dt><dd id="s-input">Tickets or emails from your helpdesk inbox</dd>
+                <dt>Agent does</dt><dd><ul id="s-does"></ul></dd>
+                <dt>Connects to</dt><dd id="s-integrations">Zendesk, Freshdesk, Intercom, HubSpot or a shared mailbox</dd>
+                <dt>Done means</dt><dd id="s-done">Agreed accuracy on a labelled sample of your real tickets, measured by an eval suite you keep</dd>
+                <dt>Price band</dt><dd class="price" id="s-price">€4,500 to €6,500</dd>
+              </dl>
+            </div>
+            <a class="btn btn-primary" id="s-cta" href="#">Send this scope to Harry →</a>
+            <p class="fine">Opens an email with the draft above. I reply within one working day with questions and a fixed quote.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Deliverables ── -->
+    <section class="spec">
+      <div class="label">Deliverables <span>§2</span></div>
+      <div>
+        <h2>What you have at the end</h2>
+        <div class="deliverables">
+          <div><strong>A working agent in production</strong><p>Deployed in your cloud, on your VPS, or on infrastructure I set up for you. Your API keys, your data, your account.</p></div>
+          <div><strong>An evaluation suite</strong><p>A labelled test set built from your real cases and a script that scores the agent against it. You rerun it whenever you change a prompt or a model.</p></div>
+          <div><strong>Guardrails and a human path</strong><p>Confidence thresholds, escalation to a person, logging of every decision, and limits on what the agent is allowed to touch.</p></div>
+          <div><strong>Handover you can act on</strong><p>Source code in your repository, a runbook, cost estimates per month, and a recorded walkthrough for whoever maintains it.</p></div>
+          <div><strong>Thirty days of fixes</strong><p>Anything that breaks or misbehaves inside the agreed scope in the first month, I fix at no charge.</p></div>
+          <div><strong>A straight answer on fit</strong><p>If week one shows the job is not a good fit for an agent, I tell you, and you stop paying. See the exit clause below.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Timeline ── -->
+    <section class="spec">
+      <div class="label">Timeline <span>§3</span></div>
+      <div>
+        <h2>Three weeks, in order</h2>
+        <div class="weeks">
+          <div class="week"><span class="w">Week 1</span><strong>Spike</strong>
+            <ul><li>One 60 minute call to pin inputs, outputs and done</li><li>Access to a sample of real cases</li><li>A rough agent against 20 to 50 of them</li><li>Go or no-go with numbers</li></ul></div>
+          <div class="week"><span class="w">Week 2</span><strong>Build</strong>
+            <ul><li>Integrations with your systems</li><li>Eval suite grows to a few hundred cases</li><li>Guardrails, escalation, logging</li><li>Mid-week demo on your data</li></ul></div>
+          <div class="week"><span class="w">Week 3</span><strong>Ship</strong>
+            <ul><li>Deploy to your environment</li><li>Shadow mode next to the current process</li><li>Runbook, walkthrough, cost sheet</li><li>Handover and start of the 30 day window</li></ul></div>
+        </div>
+        <div class="exit"><strong>Week-one exit.</strong> If the spike shows the agent cannot reach the accuracy bar we agreed, we stop. You pay €1,500 for the week and keep the spike code and the findings. No further invoice.</div>
+      </div>
+    </section>
+
+    <!-- ── Price ── -->
+    <section class="spec">
+      <div class="label">Price <span>§4</span></div>
+      <div>
+        <h2>Fixed, quoted after a 20 minute call</h2>
+        <div class="price-grid">
+          <div class="big">€4,500<br>to €7,500<small>per sprint, excluding VAT, invoiced from a Greek sole proprietorship</small></div>
+          <div class="terms">
+            <ul>
+              <li><strong>50% on signing</strong>, 50% on handover. Bank transfer or Stripe.</li>
+              <li>The band depends on the number of systems the agent touches and how messy the inputs are. Most sprints land in the middle.</li>
+              <li><strong>Not included:</strong> model API costs (usually tens of euros a month at SME volume), your cloud bill, and new work outside the scoped workflow. That becomes a second sprint.</li>
+              <li>Optional after handover: a monthly care plan for monitoring, model updates and small changes, from €600 a month. Never required.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Fit ── -->
+    <section class="spec">
+      <div class="label">Fit <span>§5</span></div>
+      <div>
+        <h2>Who this is for</h2>
+        <div class="fit">
+          <div class="yes"><h3>Good fit</h3>
+            <ul>
+              <li>Teams of 5 to 200 where one person spends hours a week on the same text-heavy task</li>
+              <li>You can give me real examples of the job, including the awkward ones</li>
+              <li>Someone on your side can answer questions within a day during the sprint</li>
+              <li>You want the code and the keys, not a subscription to a black box</li>
+            </ul></div>
+          <div class="no"><h3>Not a fit</h3>
+            <ul>
+              <li>"Add AI to the product" with no specific job in mind</li>
+              <li>Decisions with legal or medical consequences and no human in the loop</li>
+              <li>Jobs where the inputs change every week and nobody can say what correct looks like</li>
+              <li>Chatbots for the sake of a chatbot</li>
+            </ul></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── About ── -->
+    <section class="spec">
+      <div class="label">Who builds it <span>§6</span></div>
+      <div>
+        <h2>Harry Kaonis, Athens</h2>
+        <p class="lede">Senior software engineer, seven plus years shipping production software across mobile, backend and infrastructure. I work alone on each sprint, so the person you talk to on the call is the person writing the code.</p>
+        <ul class="proof">
+          <li>Built agent pipelines with evaluation harnesses, blinding and regression checks for an AI product team</li>
+          <li>Shipped consumer and enterprise React Native apps to the App Store and Google Play, with CI and crash monitoring</li>
+          <li>Run production infrastructure: Docker, reverse proxies, TLS, backups, monitoring, Cloudflare, Hetzner</li>
+          <li>Launched <a href="https://goev.gr" rel="noopener">goev.gr</a>, a 600 page site with an API, daily data pipelines and automated content, in a few weeks</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section class="spec">
+      <div class="label">Questions <span>§7</span></div>
+      <div>
+        <h2>The things people ask first</h2>
+        <details><summary>Which model, and can we use something other than Claude?</summary><p>Default is Claude through the Anthropic API, because the tool-use and long-context behaviour is the most predictable for this kind of work. If you need an EU-hosted or open-weights model for policy reasons, say so on the call. The evals tell us if it holds up.</p></details>
+        <details><summary>Where does our data go?</summary><p>To your model provider account under your own data processing terms, and to infrastructure you control. I work on a sample during the sprint and delete it at handover. A short data processing agreement is included in the contract.</p></details>
+        <details><summary>What if we have no API for the system the agent needs to touch?</summary><p>Most SaaS tools have one. For the ones that do not, we fall back to email, CSV exports, or a shared inbox the agent reads. That is usually fine for a first version and we discuss it in week one.</p></details>
+        <details><summary>Can you do this for a mobile app or an internal tool instead?</summary><p>Yes. The same fixed-scope format applies to React Native work and infrastructure setups. Email me what you have and I will tell you whether it is a sprint or a smaller job.</p></details>
+        <details><summary>How many sprints can you run at once?</summary><p>Two. I keep capacity deliberately small so each sprint gets daily attention. Start dates are first come, first served, and a signed deposit holds your slot.</p></details>
+      </div>
+    </section>
+
+    <footer>
+      <span>Harry Kaonis · Athens, Greece · <a href="mailto:ch.kaonis@proton.me">ch.kaonis@proton.me</a></span>
+      <span><a href="https://github.com/kaonis" rel="noopener">github.com/kaonis</a></span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var scopes = {
+        support: {
+          title: 'Support triage agent',
+          input: 'Tickets or emails from your helpdesk inbox',
+          does: ['Classifies by topic, urgency and customer tier', 'Drafts a reply in your tone for a person to approve, or sends when confidence is high', 'Escalates anything outside its rules with a summary'],
+          integrations: 'Zendesk, Freshdesk, Intercom, HubSpot or a shared mailbox',
+          done: 'Agreed accuracy on a labelled sample of your real tickets, measured by an eval suite you keep',
+          price: '€4,500 to €6,500'
+        },
+        documents: {
+          title: 'Document intake agent',
+          input: 'PDFs, scans, emails or uploads of a known document type',
+          does: ['Extracts the fields you need and validates them against your rules', 'Flags duplicates, missing pages and anything that looks wrong', 'Pushes clean records into your ERP, CRM or database'],
+          integrations: 'Your accounting or ERP system, Google Drive, SharePoint, S3, or a mailbox',
+          done: 'Field-level accuracy on a labelled set of your real documents, with every exception routed to a person',
+          price: '€5,000 to €7,500'
+        },
+        knowledge: {
+          title: 'Internal Q&A agent',
+          input: 'Staff questions in Slack, Teams or a web box',
+          does: ['Answers from your docs, wiki, policies and past tickets', 'Cites the source for every answer and says when it does not know', 'Logs unanswered questions so you can fix the docs'],
+          integrations: 'Notion, Confluence, Google Drive, SharePoint, Slack or Microsoft Teams',
+          done: 'Answer quality graded on a question set your team writes, with a zero tolerance rule for invented facts',
+          price: '€4,500 to €6,000'
+        },
+        crm: {
+          title: 'CRM and lead enrichment agent',
+          input: 'New leads, inbound forms or a list of target accounts',
+          does: ['Researches each company from public sources and your own notes', 'Scores and tags against your qualification criteria', 'Drafts a first message for a person to send, and updates the CRM'],
+          integrations: 'HubSpot, Pipedrive, Salesforce, Attio, or a spreadsheet',
+          done: 'Scoring agreement with your sales lead on a sample of past deals, and zero writes to the CRM without a passing check',
+          price: '€4,500 to €6,500'
+        },
+        custom: {
+          title: 'Custom workflow agent',
+          input: 'Tell me what arrives, how often, and what a finished result looks like',
+          does: ['We define the steps together on the first call', 'The week-one spike tells us if it is a fit before you commit further', 'Everything else in this document still applies'],
+          integrations: 'Whatever the workflow already lives in',
+          done: 'A definition of done we write down in week one and measure in week three',
+          price: '€4,500 to €7,500'
+        }
+      };
+      var buttons = document.querySelectorAll('.choice');
+      var body = document.getElementById('sheet-body');
+      var cta = document.getElementById('s-cta');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function render(key) {
+        var s = scopes[key];
+        document.getElementById('s-title').textContent = s.title;
+        document.getElementById('s-input').textContent = s.input;
+        var ul = document.getElementById('s-does'); ul.innerHTML = '';
+        s.does.forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+        document.getElementById('s-integrations').textContent = s.integrations;
+        document.getElementById('s-done').textContent = s.done;
+        document.getElementById('s-price').textContent = s.price;
+        var bodyText = 'Hi Harry,\n\nI am interested in an AI Agent Sprint.\n\nWorkflow: ' + s.title +
+          '\nInput: ' + s.input + '\nConnects to: ' + s.integrations +
+          '\n\nA bit about us and the job:\n(company, team size, how often this happens, which tools it lives in)\n\nBest time for a 20 minute call:\n';
+        cta.href = 'mailto:ch.kaonis@proton.me?subject=' + encodeURIComponent('AI Agent Sprint: ' + s.title) + '&body=' + encodeURIComponent(bodyText);
+      }
+
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          buttons.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+          if (reduce) { render(b.dataset.key); return; }
+          body.classList.add('out');
+          setTimeout(function () { render(b.dataset.key); body.classList.remove('out'); }, 180);
+        });
+      });
+      render('support');
+    })();
+  </script>
+</body>
+</html>
