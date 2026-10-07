@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harry Kaonis — Software Engineer</title>
   <meta name="description"
-    content="Harry Kaonis — Software engineer building for web + mobile. Turns caffeine into products and bugs into features.">
+    content="Harry Kaonis — full-stack engineer in Athens. AI agents, React Native apps, Node backends, and the infrastructure under them.">
   <meta property="og:title" content="Harry Kaonis — Software Engineer">
-  <meta property="og:description" content="Software engineer building for web + mobile. Turns caffeine into products and bugs into features.">
+  <meta property="og:description" content="Harry Kaonis — full-stack engineer in Athens. AI agents, React Native apps, Node backends, and the infrastructure under them.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://harry.kaonis.com">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Harry Kaonis — Software Engineer">
-  <meta name="twitter:description" content="Software engineer building for web + mobile. Turns caffeine into products and bugs into features.">
+  <meta name="twitter:description" content="Harry Kaonis — full-stack engineer in Athens. AI agents, React Native apps, Node backends, and the infrastructure under them.">
   <meta name="theme-color" content="#0d0d0d">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -285,17 +285,6 @@
       font-size: .6em;
     }
 
-    /* ── Coming Soon card ─────────────────────────────── */
-    .project-card.coming-soon {
-      cursor: default;
-      opacity: .7;
-      border-style: dashed;
-    }
-    .project-tag.muted {
-      background: rgba(255,255,255,.06);
-      color: var(--text-dim);
-    }
-
     /* ── Contact ───────────────────────────────────────── */
     .contact-links {
       display: flex; gap: 1rem; flex-wrap: wrap;
@@ -360,8 +349,12 @@
     @media (max-width: 600px) {
       .about-grid { grid-template-columns: 1fr; }
       .hero { padding: 5rem 0 3rem; }
-      .nav-links { gap: 1rem; }
+      .nav-links { gap: .75rem; }
+      .nav-links a { font-size: .8rem; white-space: nowrap; }
       .contact-links { flex-direction: column; }
+    }
+    @media (max-width: 420px) {
+      .nav-links li:first-child { display: none; }
     }
   </style>
 </head>
@@ -376,6 +369,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="/ai-agent-sprint/">Work with me</a></li>
       </ul>
     </div>
   </nav>
@@ -386,11 +380,15 @@
     <div class="container">
       <p class="hero-greeting">// hello, world</p>
       <h1>I'm <span class="highlight">Harry Kaonis</span>.<br>I build things for the&nbsp;web &amp; mobile.</h1>
-      <p class="hero-tagline">Software engineer who turns caffeine into products — and bugs that somehow survive code review.</p>
+      <p class="hero-tagline">Full-stack engineer. AI agents, React Native apps, Node backends, and the infrastructure under them. Still caffeine-powered.</p>
       <div class="hero-cta">
         <a href="#projects" class="btn btn-primary">
           <span>View Projects</span>
           <span>↓</span>
+        </a>
+        <a href="/ai-agent-sprint/" class="btn btn-ghost">
+          <span>AI Agent Sprint</span>
+          <span>→</span>
         </a>
         <a href="#contact" class="btn btn-ghost">
           <span>Get in Touch</span>
@@ -405,28 +403,28 @@
     <div class="container reveal">
       <p class="section-label">// about</p>
       <h2 class="section-title">Who's behind the keyboard?</h2>
-      <p class="section-desc">A software engineer who writes code by day, refactors it by night, and dreams in <code class="code-inline">async/await</code>. I build products for web and mobile, and I love shipping things that make people's lives easier — or at least more entertaining.</p>
+      <p class="section-desc">Senior full-stack engineer with 7+ years shipping products: a Greek EV site built in a night, a multi-site Wake-on-LAN system, an accessibility app for the Athens Metro, and the infrastructure that keeps them running. I dream in <code class="code-inline">async/await</code> and I automate anything I have to do twice.</p>
 
       <div class="about-grid">
         <div class="stat-card">
-          <div class="icon">⚡</div>
-          <h3>Full-Stack Dev</h3>
-          <p>TypeScript, Node.js, React, React Native, Android, iOS, and whatever the framework-of-the-week is.</p>
+          <div class="icon">🤖</div>
+          <h3>AI agents</h3>
+          <p>Claude-based agents and tool use, retrieval pipelines, content generation at scale. Agents that do one workflow well, with a human on the approve button.</p>
+        </div>
+        <div class="stat-card">
+          <div class="icon">📱</div>
+          <h3>Mobile &amp; web</h3>
+          <p>React Native with Expo for iOS and Android, React and Next.js on the web, TypeScript everywhere. Accessibility is a feature, not a ticket.</p>
         </div>
         <div class="stat-card">
           <div class="icon">🧠</div>
-          <h3>Problem Solver</h3>
-          <p>My debugger of choice is still <code class="code-inline-sm">console.log</code>. It hasn't failed me yet. (It has.)</p>
+          <h3>Backend &amp; data</h3>
+          <p>Node.js, Express, PostgreSQL, SQLite, WebSockets, public APIs and daily data pipelines. My debugger of choice is still <code class="code-inline-sm">console.log</code>. (It has failed me.)</p>
         </div>
         <div class="stat-card">
           <div class="icon">🛠️</div>
-          <h3>Tool Builder</h3>
-          <p>If I have to do something more than twice, I automate it. Third time's the script.</p>
-        </div>
-        <div class="stat-card">
-          <div class="icon">☕</div>
-          <h3>Caffeine Powered</h3>
-          <p>Fueled by espresso and the conviction that this is definitely the last deploy of the day.</p>
+          <h3>Infrastructure</h3>
+          <p>Docker, Traefik, nginx, Cloudflare, Hetzner, Tailscale, GitHub Actions. Everything as code, with runbooks, backups and monitoring. Third time's the script.</p>
         </div>
       </div>
 
@@ -446,23 +444,92 @@
       <h2 class="section-title">Things I've shipped <span class="subtitle">(that didn't crash… much)</span></h2>
       <p class="section-desc">A curated selection of my work. Some useful, some educational, all lovingly over-engineered.</p>
 
-      <!-- woly-server -->
-      <a href="https://github.com/kaonis/woly-server" class="project-card" target="_blank" rel="noopener noreferrer">
+      <!-- GoEV.gr -->
+      <a href="https://goev.gr" class="project-card" target="_blank" rel="noopener noreferrer">
         <div class="project-header">
           <span class="project-name">
-            📡 woly-server
+            🔌 GoEV.gr
             <span class="project-tag">Featured</span>
           </span>
           <span class="project-arrow">→</span>
         </div>
-        <p class="project-desc">Wake-on-LAN server monorepo — a node agent + command & control backend + shared protocol. Because why walk to your PC when you can wake it up from the couch?</p>
+        <p class="project-desc">Greek electric-vehicle site: charging map, price comparison, subsidy calculator and buying guides. 600+ generated pages, a public API and daily data pipelines. Built and launched in a single night, then extended daily.</p>
         <div class="project-tech">
           <span class="tech">TypeScript</span>
-          <span class="tech">Node.js</span>
-          <span class="tech">Monorepo</span>
-          <span class="tech">Wake-on-LAN</span>
+          <span class="tech">Cloudflare Pages</span>
+          <span class="tech">AI content pipelines</span>
+          <span class="tech">Public API</span>
         </div>
       </a>
+
+      <!-- WoLy -->
+      <a href="https://github.com/kaonis/woly-server" class="project-card" target="_blank" rel="noopener noreferrer">
+        <div class="project-header">
+          <span class="project-name">
+            📡 WoLy
+            <span class="project-tag">Open source</span>
+          </span>
+          <span class="project-arrow">→</span>
+        </div>
+        <p class="project-desc">Wake and manage machines across several networks from one phone. A React Native app talks to a command-and-control backend that aggregates per-LAN node agents over WebSockets. Because why walk to your PC when you can wake it from the couch?</p>
+        <div class="project-tech">
+          <span class="tech">React Native</span>
+          <span class="tech">Node.js</span>
+          <span class="tech">WebSockets</span>
+          <span class="tech">Turborepo</span>
+        </div>
+      </a>
+
+      <!-- Accessible Metro Athens -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">
+            🚇 Accessible Metro Athens
+            <span class="project-tag purple">Mobile</span>
+          </span>
+        </div>
+        <p class="project-desc">Accessibility information for the Athens Metro, for people with mobility needs: interactive network map, per-station elevator and escalator details, outage notifications, dark mode. iOS, Android and web from one codebase.</p>
+        <div class="project-tech">
+          <span class="tech">React Native</span>
+          <span class="tech">Expo</span>
+          <span class="tech">TypeScript</span>
+          <span class="tech">Accessibility</span>
+        </div>
+      </div>
+
+      <!-- Infrastructure as code -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">
+            🏗️ VPS &amp; homelab as code
+            <span class="project-tag pink">Infra</span>
+          </span>
+        </div>
+        <p class="project-desc">All my infrastructure in one repo: a Hetzner VPS, a Mac mini homelab and a Synology NAS. Docker services behind Traefik and nginx, Cloudflare DNS and tunnels, Tailscale mesh, nightly encrypted backups, monitoring, and runbooks so any part can be rebuilt from scratch.</p>
+        <div class="project-tech">
+          <span class="tech">Docker</span>
+          <span class="tech">Traefik</span>
+          <span class="tech">Cloudflare</span>
+          <span class="tech">GitHub Actions</span>
+        </div>
+      </div>
+
+      <!-- Indie games -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">
+            🎮 Indie game prototypes
+            <span class="project-tag purple">Game</span>
+          </span>
+        </div>
+        <p class="project-desc">Small games built end to end. Big Rush: a Unity 2D platformer with seven levels, co-op and LAN multiplayer. Volt Run: a browser 3D endless highway driver with procedural traffic and an original Blender car. Crater Club: a browser 3D artillery duel with destructible terrain.</p>
+        <div class="project-tech">
+          <span class="tech">Unity</span>
+          <span class="tech">C#</span>
+          <span class="tech">Three.js</span>
+          <span class="tech">Blender</span>
+        </div>
+      </div>
 
       <!-- UltiMagnusLabs -->
       <a href="https://ultimagnus.com" class="project-card" target="_blank" rel="noopener noreferrer">
@@ -479,23 +546,6 @@
           <span class="tech">TypeScript</span>
           <span class="tech">MDX</span>
           <span class="tech">Tailwind CSS</span>
-        </div>
-      </a>
-
-      <!-- CryptoCross -->
-      <a href="https://github.com/kaonis/CryptoCross" class="project-card" target="_blank" rel="noopener noreferrer">
-        <div class="project-header">
-          <span class="project-name">
-            🧩 CryptoCross
-            <span class="project-tag purple">Game</span>
-          </span>
-          <span class="project-arrow">→</span>
-        </div>
-        <p class="project-desc">A cryptic crosswords game with a full GUI. For those who think regular crosswords are too mainstream and need an extra layer of mystery.</p>
-        <div class="project-tech">
-          <span class="tech">Java</span>
-          <span class="tech">Swing GUI</span>
-          <span class="tech">Puzzles</span>
         </div>
       </a>
 
@@ -516,23 +566,6 @@
           <span class="tech">Irony</span>
         </div>
       </a>
-
-      <!-- dotfiles -->
-      <div class="project-card coming-soon">
-        <div class="project-header">
-          <span class="project-name">
-            ⚙️ dotfiles
-            <span class="project-tag muted">Coming Soon</span>
-          </span>
-        </div>
-        <p class="project-desc">My meticulously curated dev environment configs. Because a developer's dotfiles are basically their personality traits in YAML form.</p>
-        <div class="project-tech">
-          <span class="tech">Neovim</span>
-          <span class="tech">Zsh</span>
-          <span class="tech">Tmux</span>
-          <span class="tech">Shell</span>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -541,7 +574,7 @@
     <div class="container reveal">
       <p class="section-label">// contact</p>
       <h2 class="section-title">Let's connect</h2>
-      <p class="section-desc">Whether you want to collaborate, chat about tech, or debate the merits of dark mode — I'm always up for a conversation.</p>
+      <p class="section-desc">Hire me for an <a href="/ai-agent-sprint/">AI Agent Sprint</a>, bring me a React Native or backend problem, or just talk shop. Email gets the fastest reply.</p>
 
       <div class="contact-links">
         <a href="https://www.linkedin.com/in/charis-ioannikios-kaonis-47368130" class="contact-link" target="_blank" rel="noopener noreferrer">
